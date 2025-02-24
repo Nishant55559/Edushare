@@ -37,7 +37,7 @@ const Navbar = () => {
         </div>
         <div className="navbar-item">
           <FaBriefcase size={22} />
-          <span>Jobs</span>
+          <span>Projects</span>
         </div>
         <div className="navbar-item">
           <FaCommentDots size={22}/>
