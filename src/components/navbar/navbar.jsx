@@ -1,17 +1,28 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { FaSearch, FaHome, FaUserFriends, FaBriefcase, FaCommentDots, FaBell } from "react-icons/fa";
 import "./Navbar.css";
-import logo from './logo.svg'
-import account from './account.jpg'
+import logo from "./logo.svg";
+import account from "./account.jpg";
+
+const navItems = [
+  { name: "Home", icon: <FaHome size={22} />, path: "/" },
+  { name: "My Network", icon: <FaUserFriends size={22} />, path: "/network" },
+  { name: "Projects", icon: <FaBriefcase size={22} />, path: "/projects" },
+  { name: "Messaging", icon: <FaCommentDots size={22} />, path: "/messaging" },
+  { name: "Notifications", icon: <FaBell size={22} />, path: "/notifications" },
+];
 
 const Navbar = () => {
   const [isSearchActive, setIsSearchActive] = useState(false);
-
+  const [activeTab, setActiveTab] = useState("Home");
   return (
     <nav className="navbar">
-      {/* LinkedIn Logo */}
+      {/* Logo */}
       <div className="navbar-logo">
-        <span className="navbar-linkedin-logo"><img src={logo} alt="logo" /></span>
+        <Link to="/">
+          <img src={logo} alt="Logo" className="navbar-logo-img" />
+        </Link>
       </div>
 
       {/* Search Bar */}
@@ -27,29 +38,22 @@ const Navbar = () => {
 
       {/* Navigation Icons */}
       <div className="navbar-icons">
-        <div className="navbar-item">
-        <FaHome size={22} />
-          <span>Home</span>
-        </div>
-        <div className="navbar-item">
-          <FaUserFriends size={22}/>
-          <span>My Network</span>
-        </div>
-        <div className="navbar-item">
-          <FaBriefcase size={22} />
-          <span>Projects</span>
-        </div>
-        <div className="navbar-item">
-          <FaCommentDots size={22}/>
-          <span>Messaging</span>
-        </div>
-        <div className="navbar-item">
-          <FaBell size={22}/>
-          <span>Notifications</span>
-        </div>
+        {navItems.map((item, index) => (
+          <Link
+          key={index}
+          to={item.path}
+          className={`navbar-item ${activeTab === item.name ? "active" : ""}`}
+          onClick={() => setActiveTab(item.name)}
+        >
+          {item.icon}
+          <span>{item.name}</span>
+        </Link>
+        ))}
+
+        {/* Profile Section */}
         <div className="navbar-item navbar-profile">
           <img src={account} alt="Profile" className="navbar-profile-img" />
-          <span>Me </span>
+          <span>Me</span>
         </div>
       </div>
     </nav>
