@@ -3,6 +3,7 @@ import './App.css'
 import Home from './components/home/home';
 import Network from './components/network/network';
 import Navbar from './components/navbar/navbar';
+import Footer from './components/footer/footer';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 function App(){
     return(
@@ -16,6 +17,7 @@ function App(){
         <Route path="/notifications" element={<Notifications />} />
         <Route path="/profile" element={<Profile />} /> */}
       </Routes>
+      <Footer/>
     </Router>
     );
     };

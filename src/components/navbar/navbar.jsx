@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+
 import { FaSearch, FaHome, FaUserFriends, FaBriefcase, FaCommentDots, FaBell } from "react-icons/fa";
 import "./Navbar.css";
-import logo from "./logo.svg";
+import logo2 from "./logo2.svg";
 import account from "./account.jpg";
 
 const navItems = [
@@ -21,7 +22,7 @@ const Navbar = () => {
       {/* Logo */}
       <div className="navbar-logo">
         <Link to="/">
-          <img src={logo} alt="Logo" className="navbar-logo-img" />
+          <img src={logo2} alt="Logo" className="navbar-logo-img" />
         </Link>
       </div>
 

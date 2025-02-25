@@ -134,15 +134,30 @@
     background: gray;
     border-radius: 50%;
     margin: auto;
+    outline: none;
   }
   
   .suggestion-card button {
     background: rgb(255, 255, 255);
     color: rgb(0, 123, 255);
-  
-    border-color:solid 1px,rgb(0, 123, 255); 
+    border: 1px solid rgb(0, 123, 255); 
     padding: 5px 10px;
     border-radius: 5px;
     cursor: pointer;
-  }
-  
+    transition: background 0.3s ease, color 0.3s ease;
+    outline: none;
+}
+
+/* Hover effect */
+.suggestion-card button:hover {
+    background: rgb(30, 139, 255); 
+    color: white;
+    outline: none;
+}
+
+/* Click effect */
+.suggestion-card button:active {
+    background: rgb(30, 139, 255);
+    color: white;
+    outline: none;
+}
