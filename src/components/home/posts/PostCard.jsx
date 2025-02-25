@@ -26,11 +26,14 @@ const PostCard = ({ data }) => {
     <div className="post-card">
       {/* Profile Section */}
       <div className="post-header">
+        <div style={{ display:"flex",flexDirection:"row",alignItems:"center",justifyContent:"center" }}>
         <img src={profileImage} alt="Profile" className="profile-img" />
-        <div style={{ textAlign:"left",alignItems:"left",justifyContent:"left" }}>
-          <h4>{name}</h4>
+        <div style={{ textAlign:"left",alignItems:"center",justifyContent:"center" }}>
+          <h4 style={{marginBottom:"0px"}}>{name}</h4>
           <p className="bio">{bio}</p>
         </div>
+        </div>
+        
         <button className="menu-btn">⋮</button>
       </div>
 

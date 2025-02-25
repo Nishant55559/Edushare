@@ -3,6 +3,8 @@ import PostFeed from "./posts/PostFeed";
 import ProfileCard from "./profile snippet/ProfileCard";
 import ProjectDetails from "./profile snippet/ProjectStats";
 import "./Home.css";
+import SuggestedToFollow from "./suggestions/suggestedToFollow/SuggestedToFollow";
+import SuggestedProjects from "./suggestions/SuggestedProjects/SuggestedProjects";
 function Home(){
     return(
         
@@ -25,7 +27,10 @@ function Home(){
   
           {/* Right Column: Placeholder for Future Component */}
           <div className="right-column">
-            <div className="placeholder-component">Placeholder</div>
+             <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+      <SuggestedToFollow />
+      <SuggestedProjects />
+    </div>
           </div>
         </div>
       </div>

@@ -2,7 +2,8 @@
 .home-container {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 100vw;
+
   }
   
   /* Navbar: Fixed at Top */
@@ -18,11 +19,12 @@
   
   /* Main Content Layout */
   .main-content {
+    width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-evenly;
     margin-top: 60px; /* Adjust according to navbar height */
-    padding: 20px;
+    /* padding: 20px; */
   }
   
   /* Left Column: Profile & Projects */
@@ -30,7 +32,7 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-    width: 25%;
+    width: 20%;
   }
   
   /* Middle Column: Post Feed */
