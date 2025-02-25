@@ -1,0 +1,64 @@
+.post-card {
+    text-align: left;
+    width: 45vw;
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 10px 0;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .post-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .profile-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .menu-btn {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  .caption {
+    margin: 10px 0;
+    font-size: 14px;
+  }
+  
+  .post-media {
+    width: 100%;
+    border-radius: 5px;
+  }
+  
+  .post-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  
+  .action-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .join-btn {
+    background: black;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .bio{
+    margin-top: 0px;
+  }

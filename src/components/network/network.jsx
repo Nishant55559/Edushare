@@ -4,7 +4,7 @@ import NetworkBody from "./NetworkBody";
 function Network(){
     return(
         <div>
-            <Navbar/>
+       
             <NetworkBody/>
         </div>
     );
