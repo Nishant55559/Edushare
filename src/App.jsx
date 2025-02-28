@@ -5,7 +5,9 @@ import Home from './components/home/home';
 import Network from './components/network/network';
 import Navbar from './components/navbar/navbar';
 import Footer from './components/footer/footer';
+import NotificationBody from "./components/notification/notification_body";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Notification from "./components/notification/notification";
 function App(){
   const [showFab, setShowFab] = useState(false);
 
@@ -33,9 +35,10 @@ function App(){
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/network" element={<Network />} />
+        <Route path="/notifications" element={<Notification />} />
         {/* <Route path="/projects" element={<Projects />} />
         <Route path="/messaging" element={<Messaging />} />
-        <Route path="/notifications" element={<Notifications />} />
+       
         <Route path="/profile" element={<Profile />} /> */}
       </Routes>
        {/* Scroll to Top FAB */}
