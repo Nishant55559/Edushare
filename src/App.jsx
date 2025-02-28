@@ -26,7 +26,7 @@ function App(){
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: "smooth", // Smooth Scrolling
+      behavior: "smooth", 
     });
   };
     return(
