@@ -2,7 +2,8 @@
 import React from 'react';
 import './Footer.css';
 import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube } from 'react-icons/fa';
-
+import { auth } from '../../firebase';
+import { signOut } from 'firebase/auth';
 const Footer = () => {
   return (
     <footer className="footer-container">
@@ -43,7 +44,7 @@ const Footer = () => {
           <p>Subscribe to our newsletter for updates.</p>
           <div className="footer-newsletter-input">
             <input type="email" placeholder="Enter your email" />
-            <button>➤</button>
+            <button onClick={()=>signOut(auth)}>➤</button>
           </div>
           <div className="footer-social-icons">
             <FaFacebook />

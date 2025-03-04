@@ -58,7 +58,7 @@ function App(){
         <Route path="/notifications" element={<Notification />} />
         <Route path="/login" element={<Login />} />
         <Route path="/messaging" element={
-            <div style={{display:"flex", flexDirection:"row", justifyContent:"center", alignItems:"center"}} >
+            <div style={{display:"flex", flexDirection:"row", justifyContent:"left", alignItems:"left",padding:"10px"}} >
               <ChatList />
               <ChatScreen/>
             </div>
