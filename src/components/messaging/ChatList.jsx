@@ -26,11 +26,11 @@ function ChatList({ setSelectedUser }) {
       />
       <div className="user-list">
         {users
-          .filter(user => user.name.toLowerCase().includes(search.toLowerCase()))
+          .filter(user => user.email.toLowerCase().includes(search.toLowerCase()))
           .map(user => (
             <div key={user.uid} className="user-item" onClick={() => setSelectedUser(user)}>
-              <img src={user.profilePic} alt="pfp" className="user-avatar" />
-              <span>{user.name}</span>
+              <img src={user.pfp} alt="pfp" className="user-avatar" />
+              <span>{user.email}</span>
             </div>
           ))}
       </div>
