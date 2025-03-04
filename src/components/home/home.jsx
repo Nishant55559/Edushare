@@ -28,6 +28,7 @@ function Home(){
           {/* Right Column: Placeholder for Future Component */}
           <div className="right-column">
              <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+            {/* <Link to="/login">Go to Login</Link> */ }
       <SuggestedToFollow />
       <SuggestedProjects />
     </div>

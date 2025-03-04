@@ -8,6 +8,7 @@ import Footer from './components/footer/footer';
 import NotificationBody from "./components/notification/notification_body";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Notification from "./components/notification/notification";
+import Login from "./components/login/login";
 function App(){
   const [showFab, setShowFab] = useState(false);
 
@@ -31,11 +32,13 @@ function App(){
   };
     return(
         <Router>
+          
      <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/network" element={<Network />} />
         <Route path="/notifications" element={<Notification />} />
+        <Route path="/login" element={<Login />} />
         {/* <Route path="/projects" element={<Projects />} />
         <Route path="/messaging" element={<Messaging />} />
        

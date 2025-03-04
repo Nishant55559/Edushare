@@ -12,6 +12,7 @@ const navItems = [
   { name: "Projects", icon: <FaBriefcase size={22} />, path: "/projects" },
   { name: "Messaging", icon: <FaCommentDots size={22} />, path: "/messaging" },
   { name: "Notifications", icon: <FaBell size={22} />, path: "/notifications" },
+  { name: "Login", icon: <FaBell size={22} />, path: "/login" },  //login added
 ];
 
 const Navbar = () => {
