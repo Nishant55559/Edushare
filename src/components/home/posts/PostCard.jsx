@@ -41,12 +41,14 @@ const PostCard = ({ data }) => {
       <p className="caption">{caption}</p>
 
       {/* Media Section */}
-      {mediaType === "image" && <img src={mediaUrl} alt="Post" className="post-media" />}
-      {mediaType === "video" && (
-        <video ref={videoRef} src={mediaUrl} className="post-media" muted loop playsInline />
-      )}
-      {mediaType === "gif" && <img src={mediaUrl} alt="GIF" className="post-media" />}
-
+      <div className="media-container">
+  {mediaType === "image" && <img src={mediaUrl} alt="Post" className="post-media" />}
+  {mediaType === "video" && (
+    <video ref={videoRef} src={mediaUrl} className="post-media" muted loop playsInline />
+  )}
+  {mediaType === "gif" && <img src={mediaUrl} alt="GIF" className="post-media" />}
+  {mediaType === "svg" && <img src={mediaUrl} alt="SVG" className="post-media" />}
+</div>
       {/* Action Buttons */}
       <div className="post-footer">
         <button className="action-btn">Like</button>

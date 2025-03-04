@@ -2,24 +2,24 @@
     "name": "Gary Chettiar",
     "bio": "Flutter Developer",
     "profileImage": "https://media.licdn.com/dms/image/v2/D4D03AQFw1oxu8SHxdA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1713900726928?e=1746057600&v=beta&t=K-YW1BjLl7-qxQzV9efnRSp7fuEm5yCGZOWG2_17lik",
-    "mediaType": "gif",
-    "mediaUrl": "https://media.licdn.com/media/AAYQAQQSAAgAAQAAAAAAABqdcB5EZ18gQPCF4HzBOFBBhw.gif",
+    "mediaType": "svg",
+    "mediaUrl": "src/assets/pr4.svg",
     "caption": "I’m happy to share that I’ve obtained a new certification: Foundations: Data, Data, Everywhere from Google!"
   },
   {
-    "name": "Gary Chettiar",
-    "bio": "Flutter Developer",
-    "profileImage": "https://media.licdn.com/dms/image/v2/D4D03AQFw1oxu8SHxdA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1713900726928?e=1746057600&v=beta&t=K-YW1BjLl7-qxQzV9efnRSp7fuEm5yCGZOWG2_17lik",
-    "mediaType": "gif",
-    "mediaUrl": "https://media.licdn.com/media/AAYQAQQSAAgAAQAAAAAAABwEEXEeLoHISM2cU9LdzliLaQ.gif",
-    "caption": "I’m happy to share that I’ve obtained a new certification: Learn Android 14 App Development From Beginner to Advanced Developer. from Udemy!"
+    "name": "Nishant Raj",
+    "bio": "UI/Ux Designer| React Developer",
+    "profileImage": "src/assets/p1.jpg",
+    "mediaType": "svg",
+    "mediaUrl": "src/assets/pr5.svg",
+    "caption": "Automating Precision: A Versatile Robotic Arm for Industrial & Research Applications."
   },
   {
-    "name": "Gary Chettiar",
-    "bio": "Flutter Developer",
+    "name": "Apurv Ishan",
+    "bio": "ML Enthusiast",
     "profileImage": "https://media.licdn.com/dms/image/v2/D4D03AQFw1oxu8SHxdA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1713900726928?e=1746057600&v=beta&t=K-YW1BjLl7-qxQzV9efnRSp7fuEm5yCGZOWG2_17lik",
-    "mediaType": "image",
-    "mediaUrl": "https://media.licdn.com/dms/image/v2/D4D22AQF9h4yNxGe0kA/feedshare-shrink_2048_1536/feedshare-shrink_2048_1536/0/1719908825725?e=1743638400&v=beta&t=agMcTRjUvUPfleR6RQJYrlaEzPlvsq7amyD5Rs767J8",
-    "caption": "Hello everyone. I would like to present the certificate I received for attending the 7- day bootcamp on App Development using Flutter. Conducted early this year by GDSC SMIT and Aryan Lohia, the bootcamp helped me decide my career as an app developer. It help me build my interest towards app development. It was a enlightening experience learning about UI design and development and integrating the app with a backend on Firebase."
+    "mediaType": "svg",
+    "mediaUrl": "src/assets/pr6.svg",
+    "caption": "Smart Circuit Analysis: Enhancing Accuracy with an Advanced Voltmeter Testing System."
   }
 ]

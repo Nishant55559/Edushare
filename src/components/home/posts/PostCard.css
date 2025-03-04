@@ -1,11 +1,16 @@
 .post-card {
-    text-align: left;
-    width: 45vw;
-    background: white;
-    border-radius: 10px;
-    padding: 15px;
-    margin: 10px 0;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  width: 45vw; /* Adjust width as needed */
+  aspect-ratio: 1 / 1; /* Makes the whole post square */
+  background: white;
+  border-radius: 10px;
+  padding: 15px;
+  margin: 10px 0;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden; /* Prevent content overflow */
+  display: flex;
+  flex-direction: column; /* Stack content vertically */
+  justify-content: space-between; /
   }
   
   .post-header {
@@ -36,6 +41,8 @@
   .post-media {
     width: 100%;
     border-radius: 5px;
+    height: 100%;
+    object-fit: cover;
   }
   
   .post-footer {
@@ -61,4 +68,10 @@
   
   .bio{
     margin-top: 0px;
+  }
+
+  .media-container {
+    width: 100%; /* Full width */
+    aspect-ratio: 1 / 1; /* Makes it square */
+    overflow: hidden; /* Hides overflow */
   }
