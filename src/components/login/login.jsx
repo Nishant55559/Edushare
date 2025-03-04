@@ -1,15 +1,36 @@
 import React, { useState } from 'react';
 import './Login.css';
-
+import { auth, db } from '../../firebase';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  const handleLogin = (e) => {
+  const [error, setError] = useState('');
+  const handleLogin = async (e) => {
     e.preventDefault();
     // authentication handling
-    console.log('Email:', email);
-    console.log('Password:', password);
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      console.log("Login Successful");
+
+      const userRef = doc(db, "users", user.uid);
+      const userSnap = await getDoc(userRef);
+
+      if (!userSnap.exists()) {
+        await setDoc(userRef, {
+          email: user.email,
+          uid: user.uid,
+          createdAt: new Date(),
+        });
+        console.log("User document created");
+      }
+
+    } catch (err) {
+      console.error("Login error:", err.message);
+      setError(err.message);
+    }
     // Add authentication logic
   };
 

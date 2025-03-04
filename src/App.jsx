@@ -9,8 +9,26 @@ import NotificationBody from "./components/notification/notification_body";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Notification from "./components/notification/notification";
 import Login from "./components/login/login";
+import { auth } from "./firebase"; // Import Firebase
+import { onAuthStateChanged } from "firebase/auth";
+import ChatList from "./components/messaging/ChatList";
+import ChatScreen from "./components/messaging/ChatScreen";
 function App(){
   const [showFab, setShowFab] = useState(false);
+  const [user, setUser] = useState(null);
+
+  // Check if user is logged in
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user);
+      } else {
+        setUser(null);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   // Function to show the FAB only when user scrolls down
   useEffect(() => {
@@ -32,15 +50,23 @@ function App(){
   };
     return(
         <Router>
-          
-     <Navbar />
+          {user ?(<>
+            <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/network" element={<Network />} />
         <Route path="/notifications" element={<Notification />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/messaging" element={
+            <div style={{display:"flex", flexDirection:"row", justifyContent:"center", alignItems:"center"}} >
+              <ChatList />
+              <ChatScreen/>
+            </div>
+
+
+        } />
         {/* <Route path="/projects" element={<Projects />} />
-        <Route path="/messaging" element={<Messaging />} />
+        
        
         <Route path="/profile" element={<Profile />} /> */}
       </Routes>
@@ -51,6 +77,8 @@ function App(){
         </button>
       )}
       <Footer/>
+      </>):(<Login/>)}
+    
     </Router>
     );
     };
