@@ -53,10 +53,14 @@ const Navbar = () => {
         ))}
 
         {/* Profile Section */}
-        <div className="navbar-item navbar-profile">
+        <Link
+          to="/profile"
+          className={`navbar-item navbar-profile ${activeTab === "Profile" ? "active" : ""}`}
+          onClick={() => setActiveTab("Profile")}
+        >
           <img src={account} alt="Profile" className="navbar-profile-img" />
           <span>Me</span>
-        </div>
+        </Link>
       </div>
     </nav>
   );

@@ -1,0 +1,241 @@
+/* General Styles */
+.profile-container {
+  margin-top: 80px; /* Add space for the fixed navbar */
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  max-width: 1000px;
+  margin-left: 300px;
+  margin-right: auto;
+  font-family: Arial, sans-serif;
+  
+}
+
+/* Background Header */
+.profile-header {
+  position: relative;
+  height: 120px;
+  background: linear-gradient(90deg, #ff7e5f, #feb47b, #00c6ff);
+}
+
+/* Edit Icon */
+.edit-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: white;
+  border: none;
+  padding: 5px;
+  border-radius: 50%;
+  cursor: pointer;
+  color: #333;
+}
+
+/* Profile Content */
+.profile-content {
+  padding: 20px;
+  color: #333;
+}
+
+/* Profile Info */
+.profile-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.profile-pic {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.profile-name {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+  color: #333;
+}
+
+.profile-role,
+.profile-location {
+  font-size: 16px;
+  color: #666;
+  margin: 4px 0;
+}
+
+/* Profile Actions */
+.profile-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 15px;
+  align-items: center;
+}
+
+.btn {
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.edit-btn {
+  background-color: #0077b5;
+  color: white;
+}
+
+.edit-btn:hover {
+  background-color: #006097;
+}
+
+.settings-btn {
+  background-color: white;
+  border: 2px solid #0077b5;
+  color: #0077b5;
+}
+
+.settings-btn:hover {
+  background-color: #eef3f8;
+}
+
+/* Profile Meta */
+.profile-meta {
+  margin: 20px 0;
+  padding: 15px;
+  background: #f8f8f8;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.current-role {
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #333;
+  margin-top: 10px;
+  margin-right: 600px;
+}
+
+.role-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  background: #eef3f8;
+  color: #0077b5;
+  border-radius: 16px;
+  margin-left: 8px;
+  font-size: 14px;
+}
+
+.skills {
+  font-size: 16px;
+  color: #333;
+  margin-top: 10px;
+  margin-right:800px;
+}
+
+.skills-list {
+  display: flex;
+  gap: 8px;
+  
+  margin-top: 8px;
+  flex-direction: row;
+}
+
+.skill {
+  padding: 6px 12px;
+  background: #eef3f8;
+  color: #0077b5;
+  border-radius: 15px;
+  font-size: 14px;
+}
+
+/* Profile Options */
+.profile-options {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.option-card {
+  background: #f8f8f8;
+  padding: 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  flex: 1;
+  min-width: 120px;
+  text-align: left;
+  position: relative;
+  transition: background-color 0.2s ease;
+}
+
+.option-card:hover {
+  background: #f0f0f0;
+}
+
+.option-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.option-desc {
+  font-size: 14px;
+  color: #666;
+}
+
+.arrow {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #0077b5;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .profile-header {
+    height: 100px;
+  }
+
+  .profile-info {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .profile-pic {
+    margin-bottom: 10px;
+  }
+
+  .profile-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 8px;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  .profile-options {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .option-card {
+    width: 100%;
+  }
+}
