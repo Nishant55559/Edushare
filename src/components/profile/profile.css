@@ -19,6 +19,13 @@
   background: linear-gradient(90deg, #ff7e5f, #feb47b, #00c6ff);
 }
 
+.settings-btn:focus,
+.edit-btn:focus {
+  outline: none;
+  
+}
+
+
 /* Edit Icon */
 .edit-icon {
   position: absolute;

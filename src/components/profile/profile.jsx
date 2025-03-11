@@ -1,9 +1,12 @@
-import profilehead from "./profilehead";
+
+import MyProject from "./MyProject";
+import ProfileHead from "./profilehead";
 
  function profile() {
   return (
     <div>
-      <profilehead />
+      <ProfileHead/>
+      <MyProject />
     </div>
   );
 }

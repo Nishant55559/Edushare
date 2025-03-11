@@ -14,6 +14,8 @@ import { onAuthStateChanged } from "firebase/auth";
 import ChatList from "./components/messaging/ChatList";
 import ChatScreen from "./components/messaging/ChatScreen";
 import Profile from "./components/profile/profilehead";
+import ProfileHead from "./components/profile/profilehead";
+import MyProject from "./components/profile/MyProject";
 
 function App() {
   const [showFab, setShowFab] = useState(false);
@@ -65,7 +67,10 @@ function App() {
               <ChatScreen />
             </div>
           } />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile" element={<>
+            <ProfileHead />
+            <MyProject/></>
+        } />
         </Routes>
         {/* Scroll to Top FAB */}
         {showFab && (

@@ -1,6 +1,6 @@
 import React from "react";
 import "./profile.css";
-import account from './account.jpg';
+import profile1 from './profile1.jpg';
 const ProfileHead = () => {
   return (
     <div className="profile-container">
@@ -14,7 +14,7 @@ const ProfileHead = () => {
       <div className="profile-content">
         <div className="profile-info">
           <img
-            src={account}
+            src={profile1}
             alt="Profile"
             className="profile-pic"
           />
