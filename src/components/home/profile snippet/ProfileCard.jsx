@@ -14,7 +14,7 @@ const ProfileCard = () => {
       </div>
       {/* Profile Info */}
       <div className="profile-info">
-        <h3>Gary Chettiar</h3>
+        <h3 style={{marginTop: "20px",padding: "0px"}}>Gary Chettiar</h3>
         <p className="bio">Flutter Developer</p>
         <p className="location">Mumbai</p>
       </div>

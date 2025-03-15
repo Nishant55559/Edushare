@@ -12,7 +12,7 @@ const ProfileHead = () => {
 
       {/* Profile Info */}
       <div className="profile-content">
-        <div className="profile-info">
+        <div className="profile-Info">
           <img
             src={profile1}
             alt="Profile"

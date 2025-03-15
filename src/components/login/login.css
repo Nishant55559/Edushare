@@ -1,64 +1,69 @@
 /* Login Page Layout */
-body {
+.login-page-background {
   margin: 0;
   padding: 0;
-  background-image: url('src/assets/login.jpg'); /* Replace with your image URL */
+  background-image: url('login.jpg');
   background-size: cover;
   background-position: center;
   height: 100vh;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
 }
 
 .login-container {
-    width: 150%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background: #f3e9e9;
-  }
-  
+  width: 150%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: rgba(243, 233, 233, 0.8);
+}
+
+.login-card {
+  background: rgb(243, 234, 220);
+  padding: 60px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: 400px;
+  max-width: 90%;
+}
+
+.login-card h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.login-input {
+  width: 90%;
+  padding: 15px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+}
+
+.login-button {
+  width: 100%;
+  padding: 10px;
+  background-color: #bc902a;
+  color: white;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.login-button:hover {
+  background-color: #6b5218;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
   .login-card {
-    background: rgb(243, 234, 220);
-    padding: 60px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    width: 400px;
-    max-width: 90%;
-  }
-  
-  .login-card h2 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .login-input {
-    width: 90%;
-    padding: 15px;
-    margin: 10px 0;
-    border: 1px solid #ddd;
-    border-radius: 15px;
-  }
-  
-  .login-button {
     width: 100%;
-    padding: 10px;
-    background-color: #bc902a;
-    color: white;
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
-    margin-top: 20px;
   }
-  
-  .login-button:hover {
-    background-color: #6b5218;
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .login-card {
-      width: 100%;
-    }
-  }
+}
   
