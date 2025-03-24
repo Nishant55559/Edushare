@@ -16,6 +16,7 @@ import ChatScreen from "./components/messaging/ChatScreen";
 import Profile from "./components/profile/profilehead";
 import ProfileHead from "./components/profile/profilehead";
 import MyProject from "./components/profile/MyProject";
+import AllProjects from "./components/project/All_projects";
 
 function App() {
   const [showFab, setShowFab] = useState(false);
@@ -59,8 +60,11 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/network" element={<Network />} />
+          <Route path="/projects" element={
+             <AllProjects/>
+          } />
           <Route path="/notifications" element={<Notification />} />
-          <Route path="/login" element={<Login />} />
+          
           <Route path="/messaging" element={
             <div style={{ display: "flex", flexDirection: "row", justifyContent: "left", alignItems: "left", padding: "10px" }} >
               <ChatList />
