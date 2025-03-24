@@ -12,9 +12,24 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  background: url(bg.svg) no-repeat center center fixed;
+  background: url(bg.jpeg) no-repeat center center fixed;
   background-size: cover;
+  position: relative;  /* Needed for ::before */
+  z-index: 0;
 }
+
+:root::before {
+  content: "";
+  position: fixed; /* Stay fixed like the background */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* background-color: rgba(255, 255, 255, 0.5); Adjust opacity here */
+  pointer-events: none;
+  z-index: -1; /* Keeps it behind content */
+}
+
 
 a {
   font-weight: 500;

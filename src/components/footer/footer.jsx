@@ -13,7 +13,7 @@ const Footer = () => {
         </div>
         
         <div className="footer-links">
-          <h3 style={{color:"black"}}>Quick Links</h3>
+          <h3 style={{color:"white"}}>Quick Links</h3>
           <ul style={{ listStyle: 'none', padding: 0 }}>
             <li>Home</li>
             <li>My Network</li>
@@ -23,7 +23,7 @@ const Footer = () => {
         </div>
 
         <div className="footer-programs">
-          <h3 style={{color:"black"}}>Programs</h3>
+          <h3 style={{color:"white"}}>Programs</h3>
           <ul style={{ listStyle: 'none', padding: 0 }}>
             <li>find peer</li>
             <li>Large Projects</li>
@@ -31,7 +31,7 @@ const Footer = () => {
         </div>
 
         <div className="footer-resources">
-          <h3 style={{color:"black"}}>Resources</h3>
+          <h3 style={{color:"white"}}>Resources</h3>
           <ul style={{ listStyle: 'none' ,padding:0}}>
             <li>FAQ</li>
             <li>Figma Template</li>
@@ -40,7 +40,7 @@ const Footer = () => {
         </div>
 
         <div className="footer-newsletter">
-          <h3 style={{color:"black"}}>Newsletter</h3>
+          <h3 style={{color:"white"}}>Newsletter</h3>
           <p style={{color:"white"}}>Subscribe to our newsletter for updates.</p>
           <div className="footer-newsletter-input">
             <input type="email" placeholder="Enter your email" />
