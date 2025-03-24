@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 import { FaSearch, FaHome, FaUserFriends, FaBriefcase, FaCommentDots, FaBell } from "react-icons/fa";
-import "./Navbar.css";
+import "./navbar.css";
 import logo2 from "./logo2.svg";
 import account from "./account.jpg";
 
