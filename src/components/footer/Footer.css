@@ -1,6 +1,7 @@
 /* Footer.css */
 .footer-container {
-  background: linear-gradient(135deg, #6D4C41, #8D6E63);
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3));
+  backdrop-filter: blur(10px); /* Adds glassy blur effect */
   color: white;
 
     color: white;
