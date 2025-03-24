@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { db, auth } from "../../firebase";
-import { 
-  collection, 
-  addDoc, 
-  query, 
-  orderBy, 
-  onSnapshot, 
+import {
+  collection,
+  addDoc,
+  query,
+  orderBy,
+  onSnapshot,
   serverTimestamp,
   doc,
   setDoc,
@@ -47,7 +47,7 @@ function ChatScreen({ selectedUser }) {
       // Listen for messages in this conversation
       const messagesRef = collection(db, "conversations", conversationId, "messages");
       const q = query(messagesRef, orderBy("timestamp", "asc"));
-      
+
       const unsubscribe = onSnapshot(q, (snapshot) => {
         setMessages(snapshot.docs.map(doc => ({
           id: doc.id,
@@ -66,13 +66,14 @@ function ChatScreen({ selectedUser }) {
     const initializePeer = () => {
       if (!selectedUser?.uid) {
         console.log("undefined uid")
-        return};
+        return
+      };
       const peerId = `${auth.currentUser.uid}-${Math.random().toString(36).substr(2, 9)}`;
       const peer = new Peer(peerId, {
         config: {
           iceServers: [
             { urls: 'stun:stun.l.google.com:19302' },
-            { 
+            {
               urls: "turn:numb.viagenie.ca",
               username: "webrtc@live.com",
               credential: "muazkh"
@@ -128,13 +129,13 @@ function ChatScreen({ selectedUser }) {
         console.log('Incoming call received', call);
         setIncomingCall(true);
         setCallStatus('Incoming call...');
-        
+
         // Store call data for the notification
         setIncomingCallData({
           call,
           isVideo: call.metadata?.isVideo || false
         });
-        
+
         // Play audio indicator for incoming call
         if (!audioRef.current) {
           audioRef.current = new Audio('/path-to-your-ringtone.mp3');
@@ -161,7 +162,7 @@ function ChatScreen({ selectedUser }) {
     };
 
     peerRef.current.on('call', handleIncomingCall);
-    
+
     return () => {
       if (peerRef.current) {
         peerRef.current.off('call', handleIncomingCall);
@@ -172,42 +173,42 @@ function ChatScreen({ selectedUser }) {
   const acceptCall = async () => {
     try {
       if (!incomingCallData) return;
-      
+
       const { call, isVideo } = incomingCallData;
       console.log('Accepting call, isVideo:', isVideo);
-      
+
       // Stop ringtone
       if (audioRef.current) {
         audioRef.current.pause();
         audioRef.current = null;
       }
-      
+
       // Get user media with correct constraints for video call
       const userStream = await navigator.mediaDevices.getUserMedia({
         audio: true,
         video: isVideo
       });
-      
+
       console.log('Got local media stream with tracks:', userStream.getTracks().map(t => t.kind));
-      
+
       // Set local stream state
       setStream(userStream);
       setCallType(isVideo ? 'video' : 'audio');
       setCalling(true);
       setIncomingCall(false);
-      
+
       // Answer the call with our stream
       call.answer(userStream);
       currentCallRef.current = call;
 
       // Handle the remote stream
       call.on('stream', (incomingRemoteStream) => {
-        console.log('Received remote stream in acceptCall with tracks:', 
+        console.log('Received remote stream in acceptCall with tracks:',
           incomingRemoteStream.getTracks().map(t => t.kind));
-        
+
         // Store remote stream in state
         setRemoteStream(incomingRemoteStream);
-        
+
         setCallStatus('Connected');
       });
 
@@ -224,13 +225,13 @@ function ChatScreen({ selectedUser }) {
     if (incomingCallData) {
       incomingCallData.call.close();
     }
-    
+
     // Stop ringtone
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current = null;
     }
-    
+
     cleanup();
   };
 
@@ -239,7 +240,7 @@ function ChatScreen({ selectedUser }) {
       console.log("undefined uid");
       return;
     }
-    
+
     try {
       setCallStatus('Initiating call...');
       setCalling(true);
@@ -250,7 +251,7 @@ function ChatScreen({ selectedUser }) {
         audio: true,
         video: isVideo
       });
-      
+
       console.log('Local stream obtained with tracks:', userStream.getTracks().map(t => t.kind));
       setStream(userStream);
 
@@ -278,12 +279,12 @@ function ChatScreen({ selectedUser }) {
 
       // Handle the remote stream
       call.on('stream', (incomingRemoteStream) => {
-        console.log('Caller received remote stream with tracks:', 
+        console.log('Caller received remote stream with tracks:',
           incomingRemoteStream.getTracks().map(t => t.kind));
-        
+
         // Store remote stream in state
         setRemoteStream(incomingRemoteStream);
-        
+
         setCallStatus('Connected');
       });
 
@@ -310,7 +311,7 @@ function ChatScreen({ selectedUser }) {
 
   const cleanup = () => {
     console.log('Cleaning up call resources');
-    
+
     // Stop all tracks in local stream
     if (stream) {
       stream.getTracks().forEach(track => {
@@ -318,7 +319,7 @@ function ChatScreen({ selectedUser }) {
         track.stop();
       });
     }
-    
+
     // Stop all tracks in remote stream
     if (remoteStream) {
       remoteStream.getTracks().forEach(track => {
@@ -326,22 +327,22 @@ function ChatScreen({ selectedUser }) {
         track.stop();
       });
     }
-    
+
     // Close current call
     if (currentCallRef.current) {
       currentCallRef.current.close();
       currentCallRef.current = null;
     }
-    
+
     // Clear video elements
     if (localVideoRef.current) {
       localVideoRef.current.srcObject = null;
     }
-    
+
     if (remoteVideoRef.current) {
       remoteVideoRef.current.srcObject = null;
     }
-    
+
     // Remove call information from Firebase
     if (selectedUser?.uid) {
       deleteDoc(doc(db, "calls", selectedUser.uid)).catch(console.error);
@@ -363,7 +364,7 @@ function ChatScreen({ selectedUser }) {
       console.log("undefined uid")
       return;
     }
-    
+
     if (!input.trim() || !conversationId) return;
 
     try {
@@ -390,12 +391,12 @@ function ChatScreen({ selectedUser }) {
         )}
         <span>{selectedUser?.email}</span>
         <div className="chat-header-buttons">
-          <button 
+          <button
             className="chat-icon-button"
             onClick={() => startCall(false)}
             disabled={calling || incomingCall}
           >📞</button>
-          <button 
+          <button
             className="chat-icon-button"
             onClick={() => startCall(true)}
             disabled={calling || incomingCall}
@@ -411,13 +412,13 @@ function ChatScreen({ selectedUser }) {
               <p>From: {selectedUser?.email}</p>
             </div>
             <div className="call-actions">
-              <button 
+              <button
                 className="accept-call-button"
                 onClick={acceptCall}
               >
                 Accept
               </button>
-              <button 
+              <button
                 className="decline-call-button"
                 onClick={declineCall}
               >
@@ -433,7 +434,7 @@ function ChatScreen({ selectedUser }) {
           <div className="call-status-indicator">
             {callStatus}
           </div>
-          
+
           <div className="video-container">
             {remoteStream && (
               <video
@@ -454,6 +455,40 @@ function ChatScreen({ selectedUser }) {
             )}
           </div>
 
+          {((calling || incomingCall) && callType === 'audio') && (
+            <div className="call-container audio-call">
+              <div className="call-status-indicator">
+                {callStatus}
+              </div>
+
+              <div className="audio-call-content">
+                <div className="audio-call-avatar">
+                  {selectedUser?.profilePic ? (
+                    <img src={selectedUser.profilePic} alt={selectedUser.email} />
+                  ) : (
+                    <div className="default-avatar">
+                      {selectedUser?.email?.charAt(0).toUpperCase()}
+                    </div>
+                  )}
+                </div>
+
+                <div className="audio-call-info">
+                  <div className="audio-call-name">{selectedUser?.email}</div>
+                  <div className="audio-call-timer">
+                    {/* If you want to add a call timer, you can implement it here */}
+                    Audio Call
+                  </div>
+                </div>
+              </div>
+
+              <div className="call-controls">
+                <button onClick={cleanup} className="end-call-button">
+                  End Call
+                </button>
+              </div>
+            </div>
+          )}
+
           <div className="call-controls">
             <button onClick={cleanup} className="end-call-button">
               End Call
@@ -464,8 +499,8 @@ function ChatScreen({ selectedUser }) {
 
       <div className="chat-messages">
         {messages.map((msg) => (
-          <div 
-            key={msg.id} 
+          <div
+            key={msg.id}
             className={`message ${msg.sender === auth.currentUser.uid ? "sent" : "received"}`}
           >
             <div className="message-content">
