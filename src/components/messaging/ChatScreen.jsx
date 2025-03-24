@@ -23,6 +23,7 @@ function ChatScreen({ selectedUser }) {
   const [calling, setCalling] = useState(false);
   const [incomingCall, setIncomingCall] = useState(false);
   const [stream, setStream] = useState(null);
+  const [remoteStream, setRemoteStream] = useState(null);
   const [callType, setCallType] = useState(null);
   const [callStatus, setCallStatus] = useState('');
   const [incomingCallData, setIncomingCallData] = useState(null);
@@ -101,6 +102,23 @@ function ChatScreen({ selectedUser }) {
     return () => peerRef.current?.destroy();
   }, []);
 
+  // Update video elements whenever streams change
+  useEffect(() => {
+    console.log("Stream updated:", stream ? "exists" : "null");
+    if (stream && localVideoRef.current && callType === 'video') {
+      console.log("Setting local video stream");
+      localVideoRef.current.srcObject = stream;
+    }
+  }, [stream, callType]);
+
+  useEffect(() => {
+    console.log("Remote stream updated:", remoteStream ? "exists" : "null");
+    if (remoteStream && remoteVideoRef.current && callType === 'video') {
+      console.log("Setting remote video stream");
+      remoteVideoRef.current.srcObject = remoteStream;
+    }
+  }, [remoteStream, callType]);
+
   // Handle incoming calls
   useEffect(() => {
     if (!peerRef.current) return;
@@ -158,48 +176,37 @@ function ChatScreen({ selectedUser }) {
       const { call, isVideo } = incomingCallData;
       console.log('Accepting call, isVideo:', isVideo);
       
-      // Get user media
-      const stream = await navigator.mediaDevices.getUserMedia({
-        audio: true,
-        video: isVideo
-      });
-      
-      setStream(stream);
-      setCallType(isVideo ? 'video' : 'audio');
-      setCalling(true);
-      setIncomingCall(false);  // Change this to false as we're now in an active call
-      
       // Stop ringtone
       if (audioRef.current) {
         audioRef.current.pause();
         audioRef.current = null;
       }
       
-      // Display local video stream if it's a video call
-      if (isVideo && localVideoRef.current) {
-        console.log('Setting local video stream for receiver');
-        localVideoRef.current.srcObject = stream;
-        localVideoRef.current.play().catch(console.error);
-      }
-
+      // Get user media with correct constraints for video call
+      const userStream = await navigator.mediaDevices.getUserMedia({
+        audio: true,
+        video: isVideo
+      });
+      
+      console.log('Got local media stream with tracks:', userStream.getTracks().map(t => t.kind));
+      
+      // Set local stream state
+      setStream(userStream);
+      setCallType(isVideo ? 'video' : 'audio');
+      setCalling(true);
+      setIncomingCall(false);
+      
       // Answer the call with our stream
-      call.answer(stream);
+      call.answer(userStream);
       currentCallRef.current = call;
 
       // Handle the remote stream
-      call.on('stream', (remoteStream) => {
-        console.log('Received remote stream in acceptCall:', remoteStream.getTracks());
+      call.on('stream', (incomingRemoteStream) => {
+        console.log('Received remote stream in acceptCall with tracks:', 
+          incomingRemoteStream.getTracks().map(t => t.kind));
         
-        if (isVideo && remoteVideoRef.current) {
-          console.log('Setting remote video stream for receiver');
-          remoteVideoRef.current.srcObject = remoteStream;
-          remoteVideoRef.current.play().catch(console.error);
-        } else {
-          // For audio calls
-          const audioElement = new Audio();
-          audioElement.srcObject = remoteStream;
-          audioElement.play().catch(console.error);
-        }
+        // Store remote stream in state
+        setRemoteStream(incomingRemoteStream);
         
         setCallStatus('Connected');
       });
@@ -229,7 +236,7 @@ function ChatScreen({ selectedUser }) {
 
   const startCall = async (isVideo) => {
     if (!selectedUser?.uid) {
-      console.log("undefined uid")
+      console.log("undefined uid");
       return;
     }
     
@@ -238,20 +245,14 @@ function ChatScreen({ selectedUser }) {
       setCalling(true);
       setCallType(isVideo ? 'video' : 'audio');
 
-      // Get media stream
-      const stream = await navigator.mediaDevices.getUserMedia({
+      // Get media stream with proper video constraints
+      const userStream = await navigator.mediaDevices.getUserMedia({
         audio: true,
         video: isVideo
       });
       
-      console.log('Local stream obtained:', stream.getTracks());
-      setStream(stream);
-
-      // Display local video stream if it's a video call
-      if (isVideo && localVideoRef.current) {
-        localVideoRef.current.srcObject = stream;
-        localVideoRef.current.play().catch(console.error);
-      }
+      console.log('Local stream obtained with tracks:', userStream.getTracks().map(t => t.kind));
+      setStream(userStream);
 
       // Get recipient's peer ID
       const recipientDoc = await getDoc(doc(db, "users", selectedUser.uid));
@@ -269,24 +270,19 @@ function ChatScreen({ selectedUser }) {
       });
 
       // Make the call with metadata
-      const call = peerRef.current.call(recipientPeerId, stream, {
+      console.log('Calling peer:', recipientPeerId);
+      const call = peerRef.current.call(recipientPeerId, userStream, {
         metadata: { isVideo }
       });
       currentCallRef.current = call;
 
       // Handle the remote stream
-      call.on('stream', (remoteStream) => {
-        console.log('Caller received remote stream:', remoteStream.getTracks());
+      call.on('stream', (incomingRemoteStream) => {
+        console.log('Caller received remote stream with tracks:', 
+          incomingRemoteStream.getTracks().map(t => t.kind));
         
-        if (isVideo && remoteVideoRef.current) {
-          remoteVideoRef.current.srcObject = remoteStream;
-          remoteVideoRef.current.play().catch(console.error);
-        } else {
-          // For audio calls
-          const audioElement = new Audio();
-          audioElement.srcObject = remoteStream;
-          audioElement.play().catch(console.error);
-        }
+        // Store remote stream in state
+        setRemoteStream(incomingRemoteStream);
         
         setCallStatus('Connected');
       });
@@ -315,15 +311,26 @@ function ChatScreen({ selectedUser }) {
   const cleanup = () => {
     console.log('Cleaning up call resources');
     
+    // Stop all tracks in local stream
     if (stream) {
       stream.getTracks().forEach(track => {
-        console.log('Stopping track:', track.kind);
+        console.log('Stopping local track:', track.kind);
         track.stop();
       });
     }
     
+    // Stop all tracks in remote stream
+    if (remoteStream) {
+      remoteStream.getTracks().forEach(track => {
+        console.log('Stopping remote track:', track.kind);
+        track.stop();
+      });
+    }
+    
+    // Close current call
     if (currentCallRef.current) {
       currentCallRef.current.close();
+      currentCallRef.current = null;
     }
     
     // Clear video elements
@@ -341,7 +348,9 @@ function ChatScreen({ selectedUser }) {
     }
     deleteDoc(doc(db, "calls", auth.currentUser.uid)).catch(console.error);
 
+    // Reset all state
     setStream(null);
+    setRemoteStream(null);
     setCalling(false);
     setIncomingCall(false);
     setCallType(null);
@@ -426,19 +435,23 @@ function ChatScreen({ selectedUser }) {
           </div>
           
           <div className="video-container">
-            <video
-              ref={remoteVideoRef}
-              className="remote-video"
-              autoPlay
-              playsInline
-            />
-            <video
-              ref={localVideoRef}
-              className="local-video"
-              autoPlay
-              playsInline
-              muted
-            />
+            {remoteStream && (
+              <video
+                ref={remoteVideoRef}
+                className="remote-video"
+                autoPlay
+                playsInline
+              />
+            )}
+            {stream && (
+              <video
+                ref={localVideoRef}
+                className="local-video"
+                autoPlay
+                playsInline
+                muted
+              />
+            )}
           </div>
 
           <div className="call-controls">
