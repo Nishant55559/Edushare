@@ -1,20 +1,15 @@
-import React, { useState } from 'react';
+import React, { use, useState } from 'react';
 import ChatList from './ChatList';
 import ChatScreen from './ChatScreen';
 
 function Messaging() {
   const [selectedUser, setSelectedUser] = useState(null);
 
-  const handleUserSelect = (user) => {
-    console.log("Selecting user:", user);
-    setSelectedUser(user);
-  };
-
   return (
     <div className="messaging-container">
       <ChatList 
+        setSelectedUser={setSelectedUser} 
         selectedUser={selectedUser} 
-        setSelectedUser={handleUserSelect} 
       />
       {selectedUser && (
         <ChatScreen 
@@ -25,4 +20,4 @@ function Messaging() {
   );
 }
 
-export default Messaging; 
+export default Messaging;

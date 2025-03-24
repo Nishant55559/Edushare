@@ -10,7 +10,7 @@
   overflow: hidden; /* Prevent content overflow */
   display: flex;
   flex-direction: column; /* Stack content vertically */
-  justify-content: space-between; /
+  justify-content: space-between;
   }
   
   .post-header {

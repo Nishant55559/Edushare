@@ -17,6 +17,7 @@ import Profile from "./components/profile/profilehead";
 import ProfileHead from "./components/profile/profilehead";
 import MyProject from "./components/profile/MyProject";
 import AllProjects from "./components/project/All_projects";
+import Messaging from "./components/messaging/Messaging";
 
 function App() {
   const [showFab, setShowFab] = useState(false);
@@ -67,8 +68,7 @@ function App() {
           
           <Route path="/messaging" element={
             <div style={{ display: "flex", flexDirection: "row", justifyContent: "left", alignItems: "left", padding: "10px" }} >
-              <ChatList />
-              <ChatScreen />
+              <Messaging />
             </div>
           } />
           <Route path="/profile" element={<>

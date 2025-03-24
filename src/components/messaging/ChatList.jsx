@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { db, auth } from "../../firebase";
-import './chats.css'
+import './chats.css';
 import { 
   collection, 
   query, 
@@ -16,20 +16,25 @@ function ChatList({ setSelectedUser, selectedUser }) {
   const [users, setUsers] = useState([]);
   const [recentChats, setRecentChats] = useState([]);
 
-  // Fetch all users
   useEffect(() => {
     const fetchUsers = async () => {
-      const q = query(collection(db, "users"), where("uid", "!=", auth.currentUser.uid));
-      const querySnapshot = await getDocs(q);
-      setUsers(querySnapshot.docs.map(doc => doc.data()));
+      try {
+        const usersRef = collection(db, "users");
+        const q = query(usersRef, orderBy("uid"));
+        const querySnapshot = await getDocs(q);
+        const allUsers = querySnapshot.docs
+          .map(doc => doc.data())
+          .filter(user => user.uid !== auth.currentUser.uid);
+        setUsers(allUsers);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
     };
     fetchUsers();
   }, []);
 
-  // Listen for recent conversations
   useEffect(() => {
     const fetchRecentChats = async () => {
-      // Get all conversations where current user is involved
       const conversationsQuery = query(
         collection(db, "conversations"),
         where("participants", "array-contains", auth.currentUser.uid),
@@ -40,10 +45,7 @@ function ChatList({ setSelectedUser, selectedUser }) {
         const chats = [];
         for (const doc of snapshot.docs) {
           const data = doc.data();
-          // Get the other user's ID
           const otherUserId = data.participants.find(id => id !== auth.currentUser.uid);
-          
-          // Get other user's details
           const userDoc = await getDocs(query(
             collection(db, "users"),
             where("uid", "==", otherUserId)
@@ -71,22 +73,9 @@ function ChatList({ setSelectedUser, selectedUser }) {
       user.email.toLowerCase().includes(search.toLowerCase())
     );
 
-  useEffect(() => {
-    console.log('ChatList mounted with props:', {
-      hasSetSelectedUser: typeof setSelectedUser === 'function',
-      selectedUser
-    });
-  }, []);
-
   const handleUserSelect = (user) => {
-    console.log("ChatList - Attempting to select user:", user);
-    console.log("ChatList - setSelectedUser type:", typeof setSelectedUser);
-    
-    if (typeof setSelectedUser === 'function') {
+    console.log(typeof setSelectedUser);
       setSelectedUser(user);
-    } else {
-      console.error('setSelectedUser is not a function:', setSelectedUser);
-    }
   };
 
   return (
@@ -133,9 +122,9 @@ function ChatList({ setSelectedUser, selectedUser }) {
   );
 }
 
-ChatList.propTypes = {
-  setSelectedUser: PropTypes.func.isRequired,
-  selectedUser: PropTypes.object
-};
+// ChatList.propTypes = {
+//   setSelectedUser: PropTypes.func.isRequired,
+//   selectedUser: PropTypes.object
+// };
 
 export default ChatList;

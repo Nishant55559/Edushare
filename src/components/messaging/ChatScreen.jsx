@@ -15,6 +15,7 @@ import {
 } from "firebase/firestore";
 import Peer from 'peerjs';
 import './chats.css'
+
 function ChatScreen({ selectedUser }) {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
@@ -30,6 +31,7 @@ function ChatScreen({ selectedUser }) {
   const localVideoRef = useRef(null);
   const remoteVideoRef = useRef(null);
   const currentCallRef = useRef(null);
+  const audioRef = useRef(null);
 
   // Get or create conversation ID between two users
   useEffect(() => {
@@ -61,6 +63,9 @@ function ChatScreen({ selectedUser }) {
   // Initialize PeerJS with specific configuration
   useEffect(() => {
     const initializePeer = () => {
+      if (!selectedUser?.uid) {
+        console.log("undefined uid")
+        return};
       const peerId = `${auth.currentUser.uid}-${Math.random().toString(36).substr(2, 9)}`;
       const peer = new Peer(peerId, {
         config: {
@@ -83,6 +88,12 @@ function ChatScreen({ selectedUser }) {
         });
       });
 
+      peer.on('error', (err) => {
+        console.error('PeerJS error:', err);
+        setCallStatus('Connection error');
+        cleanup();
+      });
+
       peerRef.current = peer;
     };
 
@@ -96,7 +107,7 @@ function ChatScreen({ selectedUser }) {
 
     const handleIncomingCall = async (call) => {
       try {
-        console.log('Incoming call received');
+        console.log('Incoming call received', call);
         setIncomingCall(true);
         setCallStatus('Incoming call...');
         
@@ -107,15 +118,20 @@ function ChatScreen({ selectedUser }) {
         });
         
         // Play audio indicator for incoming call
-        const audio = new Audio('/path-to-your-ringtone.mp3');
-        audio.loop = true;
-        audio.play().catch(console.error);
+        if (!audioRef.current) {
+          audioRef.current = new Audio('/path-to-your-ringtone.mp3');
+          audioRef.current.loop = true;
+          audioRef.current.play().catch(console.error);
+        }
 
         // Clean up if call is not answered
         call.on('close', () => {
           console.log('Call closed');
           setCallStatus('Call ended');
-          audio.pause();
+          if (audioRef.current) {
+            audioRef.current.pause();
+            audioRef.current = null;
+          }
           cleanup();
         });
 
@@ -127,6 +143,12 @@ function ChatScreen({ selectedUser }) {
     };
 
     peerRef.current.on('call', handleIncomingCall);
+    
+    return () => {
+      if (peerRef.current) {
+        peerRef.current.off('call', handleIncomingCall);
+      }
+    };
   }, []);
 
   const acceptCall = async () => {
@@ -134,6 +156,7 @@ function ChatScreen({ selectedUser }) {
       if (!incomingCallData) return;
       
       const { call, isVideo } = incomingCallData;
+      console.log('Accepting call, isVideo:', isVideo);
       
       // Get user media
       const stream = await navigator.mediaDevices.getUserMedia({
@@ -144,13 +167,19 @@ function ChatScreen({ selectedUser }) {
       setStream(stream);
       setCallType(isVideo ? 'video' : 'audio');
       setCalling(true);
-      setIncomingCall(true);
-      setIncomingCallData(null);
+      setIncomingCall(false);  // Change this to false as we're now in an active call
+      
+      // Stop ringtone
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
       
       // Display local video stream if it's a video call
       if (isVideo && localVideoRef.current) {
         console.log('Setting local video stream for receiver');
         localVideoRef.current.srcObject = stream;
+        localVideoRef.current.play().catch(console.error);
       }
 
       // Answer the call with our stream
@@ -159,17 +188,23 @@ function ChatScreen({ selectedUser }) {
 
       // Handle the remote stream
       call.on('stream', (remoteStream) => {
-        console.log('Received remote stream in acceptCall');
+        console.log('Received remote stream in acceptCall:', remoteStream.getTracks());
+        
         if (isVideo && remoteVideoRef.current) {
           console.log('Setting remote video stream for receiver');
           remoteVideoRef.current.srcObject = remoteStream;
+          remoteVideoRef.current.play().catch(console.error);
         } else {
+          // For audio calls
           const audioElement = new Audio();
           audioElement.srcObject = remoteStream;
           audioElement.play().catch(console.error);
         }
+        
         setCallStatus('Connected');
       });
+
+      setIncomingCallData(null);
 
     } catch (err) {
       console.error('Error accepting call:', err);
@@ -182,10 +217,22 @@ function ChatScreen({ selectedUser }) {
     if (incomingCallData) {
       incomingCallData.call.close();
     }
+    
+    // Stop ringtone
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current = null;
+    }
+    
     cleanup();
   };
 
   const startCall = async (isVideo) => {
+    if (!selectedUser?.uid) {
+      console.log("undefined uid")
+      return;
+    }
+    
     try {
       setCallStatus('Initiating call...');
       setCalling(true);
@@ -229,12 +276,13 @@ function ChatScreen({ selectedUser }) {
 
       // Handle the remote stream
       call.on('stream', (remoteStream) => {
-        console.log('Received remote stream:', remoteStream.getTracks());
+        console.log('Caller received remote stream:', remoteStream.getTracks());
         
         if (isVideo && remoteVideoRef.current) {
           remoteVideoRef.current.srcObject = remoteStream;
           remoteVideoRef.current.play().catch(console.error);
         } else {
+          // For audio calls
           const audioElement = new Audio();
           audioElement.srcObject = remoteStream;
           audioElement.play().catch(console.error);
@@ -247,6 +295,13 @@ function ChatScreen({ selectedUser }) {
       call.on('close', () => {
         console.log('Call closed');
         setCallStatus('Call ended');
+        cleanup();
+      });
+
+      // Handle call errors
+      call.on('error', (err) => {
+        console.error('Call error:', err);
+        setCallStatus('Call error');
         cleanup();
       });
 
@@ -271,6 +326,15 @@ function ChatScreen({ selectedUser }) {
       currentCallRef.current.close();
     }
     
+    // Clear video elements
+    if (localVideoRef.current) {
+      localVideoRef.current.srcObject = null;
+    }
+    
+    if (remoteVideoRef.current) {
+      remoteVideoRef.current.srcObject = null;
+    }
+    
     // Remove call information from Firebase
     if (selectedUser?.uid) {
       deleteDoc(doc(db, "calls", selectedUser.uid)).catch(console.error);
@@ -286,6 +350,11 @@ function ChatScreen({ selectedUser }) {
   };
 
   const sendMessage = async () => {
+    if (!selectedUser?.uid) {
+      console.log("undefined uid")
+      return;
+    }
+    
     if (!input.trim() || !conversationId) return;
 
     try {
@@ -303,33 +372,6 @@ function ChatScreen({ selectedUser }) {
       console.error("Error sending message:", error);
     }
   };
-
-  // Add this useEffect to handle video refs
-  useEffect(() => {
-    if (stream && callType === 'video') {
-      if (localVideoRef.current) {
-        console.log('Setting local video stream in useEffect');
-        localVideoRef.current.srcObject = stream;
-      }
-    }
-  }, [stream, callType]);
-
-  // Add this useEffect for debugging video streams
-  useEffect(() => {
-    if (callType === 'video') {
-      console.log('Video refs status:', {
-        localVideo: {
-          ref: !!localVideoRef.current,
-          srcObject: !!localVideoRef.current?.srcObject,
-        },
-        remoteVideo: {
-          ref: !!remoteVideoRef.current,
-          srcObject: !!remoteVideoRef.current?.srcObject,
-        },
-        stream: !!stream,
-      });
-    }
-  }, [callType, stream]);
 
   return (
     <div className="chat-screen">
