@@ -3,9 +3,9 @@ import "./SuggestedProjects.css";
 import p2 from "../../../../assets/p1.jpg"
 const SuggestedProjects = () => {
   const projects = [
-    { name: "Name", user: "User" ,avatar:p2},
-    { name: "Name", user: "User" ,avatar:p2},
-    { name: "Name", user: "User" ,avatar:p2},
+    { name: "Nishant Raj", user: "CodeCollab Pro: Real-Time Coding & Review Platform" ,avatar:p2},
+    { name: "Rajbir Ray", user: "NeuroLens: AI-Based Eye Tracking for Neurological Diagnosis" ,avatar:p2},
+    { name: "Apurva Ishan", user: "AutoFarmX: Smart IoT System for Precision Agriculture" ,avatar:p2},
   ];
 
   return (
