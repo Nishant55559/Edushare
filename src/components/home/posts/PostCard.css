@@ -50,21 +50,44 @@
     display: flex;
     justify-content: space-between;
     margin-top: 10px;
+    padding: 10px 0;
+    border-top: 1px solid #e0e0e0;
   }
   
   .action-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;  /* Increased gap for larger icons */
     background: none;
     border: none;
     cursor: pointer;
+    color: #666;
+    padding: 10px 20px;  /* Increased padding for larger touch area */
+    font-size: 14px;
+    transition: all 0.2s;
+  }
+  
+  .action-btn:hover {
+    color: #0077b5;
+  }
+  
+  .action-btn.liked {
+    color: #e0245e;
   }
   
   .join-btn {
     background: black;
     color: white;
-    padding: 5px 15px;
+    padding: 8px 20px;
     border-radius: 5px;
     border: none;
     cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+  }
+  
+  .join-btn:hover {
+    background: #333;
   }
   
   .bio{
@@ -75,4 +98,38 @@
     width: 100%; /* Full width */
     aspect-ratio: 1 / 1; /* Makes it square */
     overflow: hidden; /* Hides overflow */
+  }
+
+  .comment-section {
+    margin-top: 10px;
+    padding: 10px;
+    border-top: 1px solid #e0e0e0;
+    display: flex;
+    gap: 10px;
+    align-items: center;  /* This will help align items vertically */
+  }
+
+  .comment-input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    outline: none;
+    height: 20px;  /* Fixed height */
+  }
+
+  .comment-submit {
+    background: #0077b5;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    height: 36px;  /* Match input height + padding */
+    margin-top: 4px;  /* Move button up slightly */
+    align-self: center;  /* Center align the button vertically */
+  }
+
+  .comment-submit:hover {
+    background: #006097;
   }

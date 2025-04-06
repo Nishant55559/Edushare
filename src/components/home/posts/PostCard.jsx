@@ -1,9 +1,13 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
+import { FaHeart, FaRegHeart, FaComment, FaShare } from "react-icons/fa";
 import "./PostCard.css";
 
 const PostCard = ({ data }) => {
   const { name, bio, profileImage, mediaType, mediaUrl, caption } = data;
   const videoRef = useRef(null);
+  const [isLiked, setIsLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(0);
+  const [showCommentInput, setShowCommentInput] = useState(false);
 
   // Autoplay video when in view
   useEffect(() => {
@@ -21,6 +25,35 @@ const PostCard = ({ data }) => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const handleLike = () => {
+    setIsLiked(!isLiked);
+    setLikeCount(prevCount => isLiked ? prevCount - 1 : prevCount + 1);
+  };
+
+  const handleComment = () => {
+    setShowCommentInput(!showCommentInput);
+    // Scroll to comment section if needed
+    // commentRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: 'Check out this post',
+          text: caption,
+          url: window.location.href,
+        });
+      } catch (error) {
+        console.log('Error sharing:', error);
+      }
+    } else {
+      // Fallback to copying URL
+      navigator.clipboard.writeText(window.location.href);
+      alert('Link copied to clipboard!');
+    }
+  };
 
   return (
     <div className="post-card">
@@ -51,11 +84,39 @@ const PostCard = ({ data }) => {
 </div>
       {/* Action Buttons */}
       <div className="post-footer">
-        <button className="action-btn">Like</button>
-        <button className="action-btn">Comment</button>
-        <button className="action-btn">Save</button>
+        <button 
+          className={`action-btn ${isLiked ? 'liked' : ''}`}
+          onClick={handleLike}
+        >
+          {isLiked ? <FaHeart size={24} color="#e0245e" /> : <FaRegHeart size={24} />}
+          <span>{likeCount > 0 && likeCount}</span>
+        </button>
+        <button 
+          className="action-btn"
+          onClick={handleComment}
+        >
+          <FaComment size={24} />
+        </button>
+        <button 
+          className="action-btn"
+          onClick={handleShare}
+        >
+          <FaShare size={24} />
+        </button>
         <button className="join-btn">Join</button>
       </div>
+
+      {/* Comment Input Section */}
+      {showCommentInput && (
+        <div className="comment-section">
+          <input 
+            type="text" 
+            placeholder="     Write a comment..."
+            className=" comment-input"
+          />
+          <button className="comment-submit">Post</button>
+        </div>
+      )}
     </div>
   );
 };
