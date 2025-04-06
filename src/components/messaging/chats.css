@@ -1,6 +1,7 @@
 .messaging-container {
   display: flex;
   height: 100vh;
+  margin-top: 29px;
 }
 
 .chat-list {
@@ -11,6 +12,7 @@
   flex-direction: column;
   /* justify-content: left; */
   height: 100vh;
+  margin-top: 29px;
 }
 
 .chat-list-header {
