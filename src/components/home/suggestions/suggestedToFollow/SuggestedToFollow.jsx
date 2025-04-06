@@ -10,14 +10,16 @@ const SuggestedToFollow = () => {
   ];
 
   return (
-    <div className="suggested-container">
+    <div className="follow-container">
       <h4>Suggested to follow</h4>
       {suggestions.map((user, index) => (
-        <div className="suggested-item" key={index}>
-          <img src={user.avatar}className="avatar"/>
-          <div className="user-info">
-            <span className="user-name">{user.name}</span>
-            <span className="user-bio">{user.bio}</span>
+        <div className="follow-item" key={index}>
+          <div className="follow-avatar-wrapper">
+            <img src={user.avatar} className="follow-avatar" alt={user.name}/>
+          </div>
+          <div className="follow-user-info">
+            <span className="follow-user-name">{user.name}</span>
+            <span className="follow-user-bio">{user.bio}</span>
           </div>
         </div>
       ))}
