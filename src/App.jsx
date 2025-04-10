@@ -18,7 +18,7 @@ import ProfileHead from "./components/profile/profilehead";
 import MyProject from "./components/profile/MyProject";
 import AllProjects from "./components/project/All_projects";
 import Messaging from "./components/messaging/Messaging";
-
+import { NavProvider } from "./NavContext";
 // Spinner CSS
 const spinnerStyle = {
   display: "flex",
@@ -67,7 +67,9 @@ function App() {
   }
 
   return (
+   
     <Router>
+       <NavProvider>
       {user ? (
         <>
           <Navbar />
@@ -112,7 +114,9 @@ function App() {
       ) : (
         <Login />
       )}
+      </NavProvider>
     </Router>
+    
   );
 }
 

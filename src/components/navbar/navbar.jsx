@@ -5,7 +5,7 @@ import { FaSearch, FaHome, FaUserFriends, FaBriefcase, FaCommentDots, FaBell } f
 import "./navbar.css";
 import logo2 from "./logo2.svg";
 import account from "./account.jpg";
-
+import { useNav } from "../../NavContext"; 
 const navItems = [
   { name: "Home", icon: <FaHome size={22} />, path: "/" },
   { name: "My Network", icon: <FaUserFriends size={22} />, path: "/network" },
@@ -17,7 +17,8 @@ const navItems = [
 
 const Navbar = () => {
   const [isSearchActive, setIsSearchActive] = useState(false);
-  const [activeTab, setActiveTab] = useState("Home");
+  // const [activeTab, setActiveTab] = useState("Home");
+  const { activeTab, setActiveTab } = useNav();
   return (
     <nav className="navbar">
       {/* Logo */}
