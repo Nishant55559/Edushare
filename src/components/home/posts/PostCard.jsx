@@ -3,34 +3,23 @@ import { FaHeart, FaRegHeart, FaComment, FaShare } from "react-icons/fa";
 import "./PostCard.css";
 
 const PostCard = ({ data }) => {
-  const { name, bio, profileImage, mediaType, mediaUrl, caption } = data;
-  const videoRef = useRef(null);
-  const [isLiked, setIsLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(0);
-  const [showCommentInput, setShowCommentInput] = useState(false);
-
-  // Autoplay video when in view
-  useEffect(() => {
-    const handleScroll = () => {
-      if (videoRef.current) {
-        const rect = videoRef.current.getBoundingClientRect();
-        if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
-          videoRef.current.play();
-        } else {
-          videoRef.current.pause();
-        }
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   const handleLike = () => {
     setIsLiked(!isLiked);
     setLikeCount(prevCount => isLiked ? prevCount - 1 : prevCount + 1);
   };
-
+  const [isLiked, setIsLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(0);
+  const [showCommentInput, setShowCommentInput] = useState(false);
+  const {
+    Name,
+    ContactNumber,
+    Title,
+    Description,
+    Domain,
+    Status,
+    Tools,
+    ImageURL
+  } = data;
   const handleComment = () => {
     setShowCommentInput(!showCommentInput);
     // Scroll to comment section if needed
@@ -56,33 +45,46 @@ const PostCard = ({ data }) => {
   };
 
   return (
-    <div className="post-card">
-      {/* Profile Section */}
-      <div className="post-header">
-        <div style={{ display:"flex",flexDirection:"row",alignItems:"center",justifyContent:"center" }}>
-        <img src={profileImage} alt="Profile" className="profile-img" />
-        <div style={{ textAlign:"left",alignItems:"center",justifyContent:"center" }}>
-          <h4 style={{marginBottom:"0px"}}>{name}</h4>
-          <p className="bio">{bio}</p>
+    <div className="POST-card">
+      {/* Header */}
+      <div className="POST-header">
+        <div className="POST-profile-info">
+          <img
+            src={`https://ui-avatars.com/api/?name=${encodeURIComponent(Name)}`}
+            alt="Profile"
+            className="POST-profile-img"
+          />
+          <div>
+            <h4 className="POST-name">{Name}</h4>
+            <p className="POST-domain">{Domain}</p>
+          </div>
         </div>
-        </div>
-        
-        <button className="menu-btn">⋮</button>
+        <button className="POST-menu-btn">⋮</button>
       </div>
 
-      {/* Caption */}
-      <p className="caption">{caption}</p>
-
-      {/* Media Section */}
-      <div className="media-container">
-  {mediaType === "image" && <img src={mediaUrl} alt="Post" className="post-media" />}
-  {mediaType === "video" && (
-    <video ref={videoRef} src={mediaUrl} className="post-media" muted loop playsInline />
-  )}
-  {mediaType === "gif" && <img src={mediaUrl} alt="GIF" className="post-media" />}
-  {mediaType === "svg" && <img src={mediaUrl} alt="SVG" className="post-media" />}
+      {/* Title */}
+      <div className="POST-title-status-row">
+  <h3 className="POST-title">{Title}</h3>
+  <span className="POST-status">{Status}</span>
 </div>
-      {/* Action Buttons */}
+
+      {/* Description */}
+      <p><strong>Description:</strong> {Description}</p>
+
+      {/* Tools Used */}
+      <p><strong>Tools Used:</strong> {Tools}</p>
+
+      {/* Bottom Content */}
+      {ImageURL ? (
+        <div className="POST-content-img-wrapper">
+          <img src={ImageURL} alt="Project Preview" className="POST-content-img" />
+        </div>
+      ) : null}
+    
+      {/* Timestamp */}
+     
+
+      {/* Action Button (Optional) */}
       <div className="post-footer">
         <button 
           className={`action-btn ${isLiked ? 'liked' : ''}`}
@@ -118,6 +120,7 @@ const PostCard = ({ data }) => {
         </div>
       )}
     </div>
+
   );
 };
 
