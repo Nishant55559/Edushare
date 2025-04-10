@@ -19,74 +19,101 @@ import MyProject from "./components/profile/MyProject";
 import AllProjects from "./components/project/All_projects";
 import Messaging from "./components/messaging/Messaging";
 
+// Spinner CSS
+const spinnerStyle = {
+  display: "flex",
+  height: "100vh",
+  justifyContent: "center",
+  alignItems: "center",
+  height: "100vh",
+  width: "100vw", // <-- Add this
+};
+
 function App() {
   const [showFab, setShowFab] = useState(false);
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true); // Loading state
 
   // Check if user is logged in
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUser(user);
-      } else {
-        setUser(null);
-      }
+      setUser(user || null);
+      setLoading(false); // Stop loading once we get the user status
     });
 
     return () => unsubscribe();
   }, []);
 
-  // Function to show the FAB only when user scrolls down
+  // Show FAB only on scroll
   useEffect(() => {
-    window.addEventListener("scroll", () => {
-      if (window.scrollY > 300) {
-        setShowFab(true);
-      } else {
-        setShowFab(false);
-      }
-    });
+    const handleScroll = () => {
+      setShowFab(window.scrollY > 300);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Scroll to top function
   const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+  if (loading) {
+    return (
+      <div style={spinnerStyle}>
+        <div className="loader"></div>
+      </div>
+    );
+  }
+
   return (
     <Router>
-      {user ? (<>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/network" element={<Network />} />
-          <Route path="/projects" element={
-             <AllProjects/>
-          } />
-          <Route path="/notifications" element={<Notification />} />
-          
-          <Route path="/messaging" element={
-            <div style={{ display: "flex", flexDirection: "row", justifyContent: "left", alignItems: "left", padding: "10px" }} >
-              <Messaging />
-            </div>
-          } />
-          <Route path="/profile" element={<>
-            <ProfileHead />
-            <MyProject/></>
-        } />
-        </Routes>
-        {/* Scroll to Top FAB */}
-        {showFab && (
-          <button className="fab" onClick={scrollToTop}>
-            <FaArrowUp size={24} />
-          </button>
-        )}
-        <Footer />
-      </>) : (<Login />)}
-
+      {user ? (
+        <>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/network" element={<Network />} />
+            <Route path="/projects" element={<AllProjects />} />
+            <Route path="/notifications" element={<Notification />} />
+            <Route
+              path="/messaging"
+              element={
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "left",
+                    alignItems: "left",
+                    padding: "10px",
+                  }}
+                >
+                  <Messaging />
+                </div>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <>
+                  <ProfileHead />
+                  <MyProject />
+                </>
+              }
+            />
+          </Routes>
+          {showFab && (
+            <button className="fab" onClick={scrollToTop}>
+              <FaArrowUp size={24} />
+            </button>
+          )}
+          <Footer />
+        </>
+      ) : (
+        <Login />
+      )}
     </Router>
   );
-};
+}
 
 export default App
