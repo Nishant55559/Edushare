@@ -19,13 +19,14 @@ import MyProject from "./components/profile/MyProject";
 import AllProjects from "./components/project/All_projects";
 import Messaging from "./components/messaging/Messaging";
 import { NavProvider } from "./NavContext";
+import { SearchProvider } from "./SearchContext";
 // Spinner CSS
 const spinnerStyle = {
   display: "flex",
   height: "100vh",
   justifyContent: "center",
   alignItems: "center",
-  height: "100vh",
+  // height: "100vh",
   width: "100vw", // <-- Add this
 };
 
@@ -70,6 +71,7 @@ function App() {
    
     <Router>
        <NavProvider>
+        <SearchProvider>
       {user ? (
         <>
           <Navbar />
@@ -114,6 +116,7 @@ function App() {
       ) : (
         <Login />
       )}
+      </SearchProvider>
       </NavProvider>
     </Router>
     

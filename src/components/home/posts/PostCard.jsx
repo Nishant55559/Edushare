@@ -25,13 +25,14 @@ const PostCard = ({ data }) => {
     // Scroll to comment section if needed
     // commentRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
-
   const handleShare = async () => {
+    const shareText = `${Title} - ${Description}`; // Or customize as needed
+  
     if (navigator.share) {
       try {
         await navigator.share({
           title: 'Check out this post',
-          text: caption,
+          text: shareText,
           url: window.location.href,
         });
       } catch (error) {
@@ -39,11 +40,15 @@ const PostCard = ({ data }) => {
       }
     } else {
       // Fallback to copying URL
-      navigator.clipboard.writeText(window.location.href);
-      alert('Link copied to clipboard!');
+      try {
+        await navigator.clipboard.writeText(window.location.href);
+        alert('Link copied to clipboard!');
+      } catch (err) {
+        alert('Failed to copy link');
+      }
     }
   };
-
+  
   return (
     <div className="POST-card">
       {/* Header */}
