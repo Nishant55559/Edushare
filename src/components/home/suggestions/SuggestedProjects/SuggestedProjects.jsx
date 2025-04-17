@@ -2,10 +2,11 @@ import React from "react";
 import "./SuggestedProjects.css";
 import p2 from "../../../../assets/p1.jpg";
 import { useNavigate } from "react-router-dom";
-
+import { useNav } from "../../../../NavContext";
 const SuggestedProjects = () => {
+  // const navigate = useNavigate();
+  const { setActiveTab } = useNav();
   const navigate = useNavigate();
-
   const projects = [
     { 
       name: "Nishant Raj", 
@@ -26,13 +27,10 @@ const SuggestedProjects = () => {
       category: "iot"
     },
   ];
-
   const handleProjectClick = (category) => {
-    navigate('/projects', { 
-      state: { 
-        activeCategory: category,
-        scrollToSection: true 
-      }
+    setActiveTab("Projects"); // ✅ set global active tab
+    navigate("/projects", {
+      state: { scrollToSection: true } // optional
     });
   };
 
