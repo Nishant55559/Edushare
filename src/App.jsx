@@ -20,8 +20,12 @@ import AllProjects from "./components/project/All_projects";
 import Messaging from "./components/messaging/Messaging";
 import { NavProvider } from "./NavContext";
 import { SearchProvider } from "./SearchContext";
+<<<<<<< HEAD
 import { LoginForm } from "./components/ui/login-form";
 import { SignupForm } from "./components/ui/signup-form";
+=======
+import CallScreen from "./components/messaging/CallScreen";
+>>>>>>> 83be4ce93724142565afcdc02eb2ccb1167522f6
 // Spinner CSS
 const spinnerStyle = {
   display: "flex",
@@ -70,7 +74,54 @@ function App() {
 
   return (
     <Router>
+<<<<<<< HEAD
       <AppContent user={user} showFab={showFab} scrollToTop={scrollToTop} />
+=======
+       <NavProvider>
+        <SearchProvider>
+      {user ? (
+        <>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/network" element={<Network />} />
+            <Route path="/projects" element={<AllProjects />} />
+            <Route path="/notifications" element={<Notification />} />
+            <Route
+              path="/messaging"
+              element={
+                  <Messaging />
+              }
+            />
+            <Route
+              path="/call"
+              element={
+                  <CallScreen />
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <>
+                  <ProfileHead />
+                  <MyProject />
+                </>
+              }
+            />
+          </Routes>
+          {showFab && (
+            <button className="fab" onClick={scrollToTop}>
+              <FaArrowUp size={24} />
+            </button>
+          )}
+          <Footer />
+        </>
+      ) : (
+        <Login />
+      )}
+      </SearchProvider>
+      </NavProvider>
+>>>>>>> 83be4ce93724142565afcdc02eb2ccb1167522f6
     </Router>
   );
 }
