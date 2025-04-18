@@ -8,7 +8,7 @@ import Footer from './components/footer/footer';
 import NotificationBody from "./components/notification/notification_body";
 import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
 import Notification from "./components/notification/notification";
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+// import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { auth } from "./firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import ProfileHead from "./components/profile/profilehead";
