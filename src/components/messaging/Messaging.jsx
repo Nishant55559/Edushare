@@ -1,35 +1,48 @@
-// Messaging.jsx
 import React, { useState, useEffect } from "react";
 import ChatScreen from "./ChatScreen";
 import "./ChatScreen.css";
-
-const usersMock = [
-  {
-    uid: "user1",
-    email: "alice@example.com",
-    peerId: "user1-peer"
-  },
-  {
-    uid: "user2",
-    email: "bob@example.com",
-    peerId: "user2-peer"
-  },
-];
+import { collection, getDocs } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
+import { db } from "../../firebase";
 
 function Messaging() {
+  const [usersList, setUsersList] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
+
+  useEffect(() => {
+    async function fetchUsers() {
+      const auth = getAuth();
+      const currentUser = auth.currentUser;
+
+      const usersRef = collection(db, "users");
+      const querySnapshot = await getDocs(usersRef);
+
+      const filteredUsers = querySnapshot.docs
+        .filter(doc => doc.id !== currentUser?.uid)
+        .map(doc => ({
+          uid: doc.id,
+          ...doc.data(),
+        }));
+
+      setUsersList(filteredUsers);
+    }
+
+    fetchUsers();
+  }, []);
 
   return (
     <div className="messaging-container">
       <div className="sidebar">
-        <h2>Users</h2>
-        {usersMock.map((user) => (
+        <div className="sidebar-header">
+          <h2>Users</h2>
+        </div>
+        {usersList.map((user) => (
           <div
             key={user.uid}
             className={`sidebar-user ${selectedUser?.uid === user.uid ? "active" : ""}`}
             onClick={() => setSelectedUser(user)}
           >
-            {user.email}
+            {user.name}
           </div>
         ))}
       </div>

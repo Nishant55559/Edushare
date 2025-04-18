@@ -6,7 +6,7 @@ import Network from './components/network/network';
 import Navbar from './components/navbar/navbar';
 import Footer from './components/footer/footer';
 import NotificationBody from "./components/notification/notification_body";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
 import Notification from "./components/notification/notification";
 import Login from "./components/login/login";
 import { auth } from "./firebase"; // Import Firebase
@@ -21,20 +21,21 @@ import Messaging from "./components/messaging/Messaging";
 import { NavProvider } from "./NavContext";
 import { SearchProvider } from "./SearchContext";
 import CallScreen from "./components/messaging/CallScreen";
+
 // Spinner CSS
 const spinnerStyle = {
   display: "flex",
   height: "100vh",
   justifyContent: "center",
   alignItems: "center",
-  // height: "100vh",
-  width: "100vw", // <-- Add this
+  width: "100vw",
 };
 
 function App() {
   const [showFab, setShowFab] = useState(false);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true); // Loading state
+  const location = useLocation(); // Always call this unconditionally
 
   // Check if user is logged in
   useEffect(() => {
@@ -69,55 +70,39 @@ function App() {
   }
 
   return (
-   
-    <Router>
-       <NavProvider>
-        <SearchProvider>
-      {user ? (
-        <>
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/network" element={<Network />} />
-            <Route path="/projects" element={<AllProjects />} />
-            <Route path="/notifications" element={<Notification />} />
-            <Route
-              path="/messaging"
-              element={
-                  <Messaging />
-              }
-            />
-            <Route
-              path="/call"
-              element={
-                  <CallScreen />
-              }
-            />
-            <Route
-              path="/profile"
-              element={
-                <>
-                  <ProfileHead />
-                  <MyProject />
-                </>
-              }
-            />
-          </Routes>
-          {showFab && (
-            <button className="fab" onClick={scrollToTop}>
-              <FaArrowUp size={24} />
-            </button>
-          )}
-          <Footer />
-        </>
-      ) : (
-        <Login />
-      )}
-      </SearchProvider>
-      </NavProvider>
-    </Router>
     
+      <NavProvider>
+        <SearchProvider>
+          {user ? (
+            <>
+              <Navbar />
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/network" element={<Network />} />
+                <Route path="/projects" element={<AllProjects />} />
+                <Route path="/notifications" element={<Notification />} />
+                <Route path="/messaging" element={<Messaging />} />
+                <Route path="/call" element={<CallScreen />} />
+                <Route path="/profile" element={<ProfileHead />} />
+                <Route path="/my-project" element={<MyProject />} />
+              </Routes>
+
+              {showFab && (
+                <button className="fab" onClick={scrollToTop}>
+                  <FaArrowUp size={24} />
+                </button>
+              )}
+
+              {/* Unconditionally check location path */}
+              {location.pathname !== '/messaging' && <Footer />}
+            </>
+          ) : (
+            <Login />
+          )}
+        </SearchProvider>
+      </NavProvider>
+   
   );
 }
 
-export default App
+export default App;
