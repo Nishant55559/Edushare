@@ -5,52 +5,42 @@ import Home from './components/home/home';
 import Network from './components/network/network';
 import Navbar from './components/navbar/navbar';
 import Footer from './components/footer/footer';
-import NotificationBody from "./components/notification/notification_body";
-import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
 import Notification from "./components/notification/notification";
-import Login from "./components/login/login";
-import { auth } from "./firebase"; // Import Firebase
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import { auth } from "./firebase";
 import { onAuthStateChanged } from "firebase/auth";
-import ChatList from "./components/messaging/ChatList";
-import ChatScreen from "./components/messaging/ChatScreen";
-import Profile from "./components/profile/profilehead";
 import ProfileHead from "./components/profile/profilehead";
 import MyProject from "./components/profile/MyProject";
 import AllProjects from "./components/project/All_projects";
 import Messaging from "./components/messaging/Messaging";
 import { NavProvider } from "./NavContext";
 import { SearchProvider } from "./SearchContext";
-<<<<<<< HEAD
 import { LoginForm } from "./components/ui/login-form";
 import { SignupForm } from "./components/ui/signup-form";
-=======
 import CallScreen from "./components/messaging/CallScreen";
->>>>>>> 83be4ce93724142565afcdc02eb2ccb1167522f6
-// Spinner CSS
+
 const spinnerStyle = {
   display: "flex",
   height: "100vh",
   justifyContent: "center",
   alignItems: "center",
-  // height: "100vh",
-  width: "100vw", // <-- Add this
+  width: "100vw",
 };
 
 function App() {
   const [showFab, setShowFab] = useState(false);
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true); // Loading state
-  // Check if user is logged in
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user || null);
-      setLoading(false); // Stop loading once we get the user status
+      setLoading(false);
     });
 
     return () => unsubscribe();
   }, []);
 
-  // Show FAB only on scroll
   useEffect(() => {
     const handleScroll = () => {
       setShowFab(window.scrollY > 300);
@@ -74,61 +64,13 @@ function App() {
 
   return (
     <Router>
-<<<<<<< HEAD
       <AppContent user={user} showFab={showFab} scrollToTop={scrollToTop} />
-=======
-       <NavProvider>
-        <SearchProvider>
-      {user ? (
-        <>
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/network" element={<Network />} />
-            <Route path="/projects" element={<AllProjects />} />
-            <Route path="/notifications" element={<Notification />} />
-            <Route
-              path="/messaging"
-              element={
-                  <Messaging />
-              }
-            />
-            <Route
-              path="/call"
-              element={
-                  <CallScreen />
-              }
-            />
-            <Route
-              path="/profile"
-              element={
-                <>
-                  <ProfileHead />
-                  <MyProject />
-                </>
-              }
-            />
-          </Routes>
-          {showFab && (
-            <button className="fab" onClick={scrollToTop}>
-              <FaArrowUp size={24} />
-            </button>
-          )}
-          <Footer />
-        </>
-      ) : (
-        <Login />
-      )}
-      </SearchProvider>
-      </NavProvider>
->>>>>>> 83be4ce93724142565afcdc02eb2ccb1167522f6
     </Router>
   );
 }
 
 function AppContent({ user, showFab, scrollToTop }) {
   const location = useLocation();
-
   const isSignUpPage = location.pathname === "/sign-up";
 
   return (
@@ -142,22 +84,8 @@ function AppContent({ user, showFab, scrollToTop }) {
               <Route path="/network" element={<Network />} />
               <Route path="/projects" element={<AllProjects />} />
               <Route path="/notifications" element={<Notification />} />
-              <Route
-                path="/messaging"
-                element={
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      justifyContent: "left",
-                      alignItems: "left",
-                      padding: "10px",
-                    }}
-                  >
-                    <Messaging />
-                  </div>
-                }
-              />
+              <Route path="/messaging" element={<Messaging />} />
+              <Route path="/call" element={<CallScreen />} />
               <Route
                 path="/profile"
                 element={
@@ -176,14 +104,11 @@ function AppContent({ user, showFab, scrollToTop }) {
             <Footer />
           </>
         ) : isSignUpPage ? (
-          <Routes>
-            <Route path="/sign-up" element={<div className="flex flex-col justify-center items-center w-screen">
-              <SignupForm />
-            </div>
-            } />
-          </Routes>
+          <div className="flex flex-col justify-center items-center w-screen min-h-screen">
+            <SignupForm />
+          </div>
         ) : (
-          <div className="flex flex-col justify-center items-center w-screen">
+          <div className="flex flex-col justify-center items-center w-screen min-h-screen">
             <LoginForm />
           </div>
         )}
@@ -192,5 +117,4 @@ function AppContent({ user, showFab, scrollToTop }) {
   );
 }
 
-
-export default App
+export default App;

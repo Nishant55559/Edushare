@@ -47,10 +47,10 @@ const handleSubmit = async (e) => {
     <div
       className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black/70 backdrop-blur-sm">
       <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200">
-        Welcome to Edu Kollab
+        Welcome to EduKollab
       </h2>
       <p className="text-neutral-600 text-sm max-w-sm mt-2 dark:text-neutral-300">
-        Login to aceternity if you can because we don&apos;t have a login flow
+        Login to EduKollab if you can because we don&apos;t have a login flow
         yet 
       </p>
       <form className="my-8" onSubmit={handleSubmit}>
@@ -60,7 +60,7 @@ const handleSubmit = async (e) => {
         </LabelInputContainer>
         <LabelInputContainer className="mb-4">
           <Label htmlFor="password">Password</Label>
-          <Input id="password" placeholder="••••••••" type="password" onChange={(e) => setPassword(e.target.value)} />
+          <Input id="password" placeholder="••••••••" type="password" onChange={(e) => setPassword(e.target.value)} className="border border-gray-300 focus:border-gray-300 focus:outline-none !border-0.01" />
         </LabelInputContainer>
 
         <button
