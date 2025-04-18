@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import { FaHeart, FaRegHeart, FaComment, FaShare } from "react-icons/fa";
 import "./PostCard.css";
+import { Button } from "@/components/ui/button";
 
 const PostCard = ({ data }) => {
   const handleLike = () => {
@@ -110,7 +111,8 @@ const PostCard = ({ data }) => {
         >
           <FaShare size={24} />
         </button>
-        <button className="join-btn">Join</button>
+        {/* <button className="join-btn">Join</button> */}
+        <Button/>
       </div>
 
       {/* Comment Input Section */}
