@@ -1,50 +1,55 @@
-// ChatScreen.jsx
 import React, { useState, useEffect, useRef } from "react";
 import { FaPhone, FaVideo, FaEllipsisV, FaPaperPlane } from "react-icons/fa";
 import "./ChatScreen.css";
-import { collection, addDoc, serverTimestamp,query, orderBy, onSnapshot } from "firebase/firestore";
+import { collection, addDoc, serverTimestamp, query, orderBy, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase"; // adjust path to your Firebase config
 import { useNavigate } from "react-router-dom";
+
 function ChatScreen({ user }) {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const chatEndRef = useRef(null);
+  const [shouldScroll, setShouldScroll] = useState(false); // Track if scroll should happen
 
   useEffect(() => {
     if (!user?.uid) return;
-  
+
     const q = query(
       collection(db, "chats", user.uid, "messages"),
       orderBy("timestamp", "asc")
     );
-  
+
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const msgs = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
       setMessages(msgs);
+      setShouldScroll(true); // Enable scroll when new messages arrive
     });
-  
+
     return () => unsubscribe(); // cleanup on unmount or user change
   }, [user]);
 
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+    if (shouldScroll) {
+      chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+      setShouldScroll(false); // Reset after scrolling
+    }
+  }, [messages, shouldScroll]);
 
   const sendMessage = async () => {
     if (!input.trim()) return;
-  
+
     const newMsg = {
       sender: "me", // you can use actual uid/email here
       text: input,
       timestamp: serverTimestamp(),
     };
-  
+
     setMessages((prev) => [...prev, { ...newMsg, id: Date.now() }]); // optimistic update
     setInput("");
-  
+
     try {
       await addDoc(
         collection(db, "chats", user.uid, "messages"), // e.g., messages subcollection under user
@@ -58,12 +63,10 @@ function ChatScreen({ user }) {
   const handleKeyPress = (e) => {
     if (e.key === "Enter") sendMessage();
   };
-  
 
   const navigate = useNavigate();
-  
+
   const startAudioCall = () => {
-    // Navigate to CallScreen with audio mode and participants list
     navigate("/call", {
       state: {
         mode: "audio",
@@ -77,9 +80,8 @@ function ChatScreen({ user }) {
       },
     });
   };
-  
+
   const startVideoCall = () => {
-    // Navigate to CallScreen with video mode and participants list
     navigate("/call", {
       state: {
         mode: "video",
@@ -93,13 +95,12 @@ function ChatScreen({ user }) {
       },
     });
   };
-  
 
   return (
     <div className="chat-screen">
       <div className="chat-header">
         <div className="user-info">
-          <strong>{user.email}</strong>
+          <strong>{user.name}</strong>
         </div>
         <div className="chat-actions">
           <button onClick={startAudioCall} title="Audio Call">

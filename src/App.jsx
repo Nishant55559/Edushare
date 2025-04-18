@@ -5,8 +5,10 @@ import Home from './components/home/home';
 import Network from './components/network/network';
 import Navbar from './components/navbar/navbar';
 import Footer from './components/footer/footer';
+import NotificationBody from "./components/notification/notification_body";
+import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
 import Notification from "./components/notification/notification";
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+// import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { auth } from "./firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import ProfileHead from "./components/profile/profilehead";
@@ -19,6 +21,7 @@ import { LoginForm } from "./components/ui/login-form";
 import { SignupForm } from "./components/ui/signup-form";
 import CallScreen from "./components/messaging/CallScreen";
 
+// Spinner CSS
 const spinnerStyle = {
   display: "flex",
   height: "100vh",
@@ -30,6 +33,8 @@ const spinnerStyle = {
 function App() {
   const [showFab, setShowFab] = useState(false);
   const [user, setUser] = useState(null);
+  // const [loading, setLoading] = useState(true); // Loading state
+  const location = useLocation(); // Always call this unconditionally
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -63,9 +68,9 @@ function App() {
   }
 
   return (
-    <Router>
+    
       <AppContent user={user} showFab={showFab} scrollToTop={scrollToTop} />
-    </Router>
+    
   );
 }
 
