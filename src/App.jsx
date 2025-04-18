@@ -20,6 +20,7 @@ import AllProjects from "./components/project/All_projects";
 import Messaging from "./components/messaging/Messaging";
 import { NavProvider } from "./NavContext";
 import { SearchProvider } from "./SearchContext";
+import CallScreen from "./components/messaging/CallScreen";
 // Spinner CSS
 const spinnerStyle = {
   display: "flex",
@@ -83,17 +84,13 @@ function App() {
             <Route
               path="/messaging"
               element={
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "left",
-                    alignItems: "left",
-                    padding: "10px",
-                  }}
-                >
                   <Messaging />
-                </div>
+              }
+            />
+            <Route
+              path="/call"
+              element={
+                  <CallScreen />
               }
             />
             <Route
