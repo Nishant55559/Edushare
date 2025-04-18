@@ -1,9 +1,11 @@
 .project-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
     gap: 20px;
     padding: 20px;
     margin-left: 300px;
+    max-width: 900px;
   }
   
   .project-card {
@@ -13,6 +15,7 @@
     overflow: hidden;
     text-align: center;
     transition: transform 0.3s ease-in-out;
+    margin-right: 50px;
   }
   
   .project-card:hover {

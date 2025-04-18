@@ -75,90 +75,112 @@
   margin-top: 1rem;
 }
 
-  .post-footer {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
-    padding: 10px 0;
-    border-top: 1px solid #e0e0e0;
-  }
-  
-  .action-btn {
-    display: flex;
-    align-items: center;
-    gap: 8px;  /* Increased gap for larger icons */
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #666;
-    padding: 10px 20px;  /* Increased padding for larger touch area */
-    font-size: 14px;
-    transition: all 0.2s;
-  }
-  
-  .action-btn:hover {
-    color: #0077b5;
-  }
-  
-  .action-btn.liked {
-    color: #e0245e;
-  }
-  
-  .join-btn {
-    background: black;
-    color: white;
-    padding: 8px 20px;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.2s;
-  }
-  
-  .join-btn:hover {
-    background: #333;
-  }
-  
-  .bio{
-    margin-top: 0px;
-  }
+.post-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+  padding: 15px 0;
+  border-top: 1px solid #e0e0e0;
+}
 
-  .media-container {
-    width: 100%; /* Full width */
-    aspect-ratio: 1 / 1; /* Makes it square */
-    overflow: hidden; /* Hides overflow */
-  }
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #666;
+  padding: 8px 15px;
+  font-size: 14px;
+  transition: all 0.2s;
+  border-radius: 8px;
+}
 
-  .comment-section {
-    margin-top: 10px;
-    padding: 10px;
-    border-top: 1px solid #e0e0e0;
-    display: flex;
-    gap: 10px;
-    align-items: center;  /* This will help align items vertically */
-  }
+.action-btn:hover {
+  background-color: #f0f0f0;
+  color: #0077b5;
+}
 
-  .comment-input {
-    flex: 1;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 20px;
-    outline: none;
-    height: 20px;  /* Fixed height */
-  }
+.action-btn.liked {
+  color: #e0245e;
+}
 
-  .comment-submit {
-    background: #0077b5;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 10px;
-    cursor: pointer;
-    height: 36px;  /* Match input height + padding */
-    margin-top: 4px;  /* Move button up slightly */
-    align-self: center;  /* Center align the button vertically */
-  }
+.join-btn {
+  background: #000000;
+  color: white;
+  padding: 8px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
 
-  .comment-submit:hover {
-    background: #006097;
-  }
+
+.bio{
+  margin-top: 0px;
+}
+
+.media-container {
+  width: 100%; /* Full width */
+  aspect-ratio: 1 / 1; /* Makes it square */
+  overflow: hidden; /* Hides overflow */
+}
+
+.comment-section {
+  margin-top: 15px;
+  padding: 15px;
+  border-top: 1px solid #e0e0e0;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+.comment-input {
+  flex: 1;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  outline: none;
+  font-size: 14px;
+  background-color: white;
+  transition: all 0.2s;
+  color: #333;
+  width: 100%;
+}
+
+.comment-input::placeholder {
+  color: #666;
+  opacity: 0.8;
+}
+
+.comment-input:focus {
+  border-color: #0077b5;
+  box-shadow: 0 0 0 2px rgba(0, 119, 181, 0.1);
+}
+
+.comment-submit {
+  background: #000000;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s;
+  white-space: nowrap;
+  min-width: 80px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.comment-submit:hover {
+  background: #006097;
+  transform: translateY(-1px);
+}

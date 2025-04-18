@@ -111,8 +111,7 @@ const PostCard = ({ data }) => {
         >
           <FaShare size={24} />
         </button>
-        {/* <button className="join-btn">Join</button> */}
-        <Button/>
+        <button className="join-btn">Join</button>
       </div>
 
       {/* Comment Input Section */}
@@ -123,7 +122,8 @@ const PostCard = ({ data }) => {
             placeholder="     Write a comment..."
             className=" comment-input"
           />
-          <button className="comment-submit">Post</button>
+         <button className="comment-submit" style={{ textAlign: "center" }}>
+                                        Post</button>
         </div>
       )}
     </div>

@@ -25,7 +25,7 @@ const NetworkBody = () => {
     <div className="network-body">
       {/* Sidebar */}
       <div className="network-sidebar">
-        <h3>Manage my network</h3>
+        <h3 style={{color:"gray"}}>Manage my network</h3>
         <ul>
           <li><FaUsers className="network-icon" /> Connections <span style={{gap:"5px"}}> 136</span></li>
           <li><FaUserPlus className="network-icon" /> Following & followers <span>1</span></li>
@@ -40,7 +40,7 @@ const NetworkBody = () => {
       <div className="network-main">
         {/* Invitations */}
         <div className="network-invitations">
-          <h4>No pending invitations</h4>
+          <h4 style={{color:"black"}}>No pending invitations</h4>
           <button className="manage-btn">Manage</button>
         </div>
 
